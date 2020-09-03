@@ -30,7 +30,7 @@ class MmakaanSpiderSpider(scrapy.Spider):
 
         test_title = [ ''.join(x) for x in zip(title[0::2], title[1::2], title[2::2])]
 
-        self.items['title'].append(title)
+        self.items['title'].append(test_title)
         self.items['price'].append(price)
         self.items['area'].append(area)
         self.items['owner_name'].append(owner_name)
@@ -54,11 +54,11 @@ class MmakaanSpiderSpider(scrapy.Spider):
 
 
         df = pd.DataFrame.from_dict(self.items, orient='index')
-        df = df.transpose()  
+        # df = df.transpose()  
         df.head()
         '''lst = df['title']
         df['title'] = [ ''.join(x) for x in zip(lst[0::2], lst[1::2], lst[2::2])]'''
-        df.to_excel("test_03.xlsx")
+        df.to_excel("test_06.xlsx")
 
 
         # yield scraped_info
