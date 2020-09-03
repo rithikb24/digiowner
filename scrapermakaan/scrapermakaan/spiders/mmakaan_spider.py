@@ -8,9 +8,18 @@ class MmakaanSpiderSpider(scrapy.Spider):
     start_urls = ['https://www.makaan.com/indore-residential-property/rent-property-in-indore-city?page=1']
     page_variable = 2
 
+    def __init__(self):
+        self.items = {
+            'title':[],
+            'price':[],
+            'area':[],
+            'owner_name':[],
+            'address':[]
+        }
+
     def parse(self, response):
         
-        items = ScrapermakaanItem()
+        # items = ScrapermakaanItem()
          
 
         area = response.css('.size .val::text').extract()
@@ -21,19 +30,18 @@ class MmakaanSpiderSpider(scrapy.Spider):
 
         test_title = [ ''.join(x) for x in zip(title[0::2], title[1::2], title[2::2])]
 
-
-        items['title'] = test_title
-        items['price'] = price
-        items['area'] = area
-        items['owner_name'] = owner_name
-        items['address'] = address
+        self.items['title'].append(title)
+        self.items['price'].append(price)
+        self.items['area'].append(area)
+        self.items['owner_name'].append(owner_name)
+        self.items['address'].append(address)
         next_page = 'https://www.makaan.com/indore-residential-property/rent-property-in-indore-city?page=' +str(MmakaanSpiderSpider.page_variable) + '/'
 
-        if MmakaanSpiderSpider.page_variable<10:
+        if MmakaanSpiderSpider.page_variable<5:
             MmakaanSpiderSpider.page_variable += 1
             yield response.follow(next_page, callback = self.parse)
 
-        yield items
+        yield self.items
 
         # scraped_info = {
         # 'title' : test_title,
@@ -45,12 +53,12 @@ class MmakaanSpiderSpider(scrapy.Spider):
 
 
 
-        # df = pd.DataFrame.from_dict(scraped_info, orient='index')
-        # df.transpose()  
-        # df.head()
-        # '''lst = df['title']
-        # df['title'] = [ ''.join(x) for x in zip(lst[0::2], lst[1::2], lst[2::2])]'''
-        # df.to_excel("demo.xlsx")
+        df = pd.DataFrame.from_dict(self.items, orient='index')
+        df = df.transpose()  
+        df.head()
+        '''lst = df['title']
+        df['title'] = [ ''.join(x) for x in zip(lst[0::2], lst[1::2], lst[2::2])]'''
+        df.to_excel("test_03.xlsx")
 
 
         # yield scraped_info
