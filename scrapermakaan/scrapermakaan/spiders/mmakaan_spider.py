@@ -5,7 +5,7 @@ import pandas as pd
 
 class MmakaanSpiderSpider(scrapy.Spider):
     name = 'makaan_spider'
-    start_urls = ['https://www.makaan.com/listings?propertyType=apartment&listingType=rent&pageType=CITY_URLS&cityName=Indore&cityId=13&templateId=MAKAAN_CITY_LISTING_RENT&page=1']
+    start_urls = ['https://www.makaan.com/indore-property/mahalakshmi-nagar-rental-flats-52212?page=1']
     page_variable = 2
 
     def __init__(self):
@@ -30,12 +30,12 @@ class MmakaanSpiderSpider(scrapy.Spider):
 
         test_title = [ ''.join(x) for x in zip(title[0::2], title[1::2], title[2::2])]
 
-        self.items['title'].append(test_title)
+        # self.items['title'].append(test_title)
         self.items['price'].append(price)
         self.items['area'].append(area)
-        self.items['owner_name'].append(owner_name)
-        self.items['address'].append(address)
-        next_page = 'https://www.makaan.com/listings?propertyType=apartment&listingType=rent&pageType=CITY_URLS&cityName=Indore&cityId=13&templateId=MAKAAN_CITY_LISTING_RENT&page=' +str(MmakaanSpiderSpider.page_variable) + '/'
+        # self.items['owner_name'].append(owner_name)
+        # self.items['address'].append(address)
+        next_page = 'https://www.makaan.com/indore-property/mahalakshmi-nagar-rental-flats-52212?page=' +str(MmakaanSpiderSpider.page_variable) + '/'
 
         if MmakaanSpiderSpider.page_variable<5:
             MmakaanSpiderSpider.page_variable += 1
@@ -58,7 +58,7 @@ class MmakaanSpiderSpider(scrapy.Spider):
         df.head()
         '''lst = df['title']
         df['title'] = [ ''.join(x) for x in zip(lst[0::2], lst[1::2], lst[2::2])]'''
-        df.to_excel("apartment_00.xlsx") 
+        df.to_excel("mahalakshmi_price_area.xlsx") 
 
 
         # yield scraped_info
