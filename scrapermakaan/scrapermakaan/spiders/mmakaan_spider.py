@@ -5,7 +5,7 @@ import pandas as pd
 
 class MmakaanSpiderSpider(scrapy.Spider):
     name = 'makaan_spider'
-    start_urls = ['https://www.makaan.com/indore-property/mahalakshmi-nagar-rental-flats-52212?page=1']
+    start_urls = ['https://www.makaan.com/indore-property/geeta-bhavan-rental-flats-58662']
     page_variable = 2
 
     def __init__(self):
@@ -35,11 +35,11 @@ class MmakaanSpiderSpider(scrapy.Spider):
         self.items['area'].append(area)
         # self.items['owner_name'].append(owner_name)
         # self.items['address'].append(address)
-        next_page = 'https://www.makaan.com/indore-property/mahalakshmi-nagar-rental-flats-52212?page=' +str(MmakaanSpiderSpider.page_variable) + '/'
+        # next_page = 'https://www.makaan.com/indore-property/mahalakshmi-nagar-rental-flats-52212?page=' +str(MmakaanSpiderSpider.page_variable) + '/'
 
-        if MmakaanSpiderSpider.page_variable<5:
-            MmakaanSpiderSpider.page_variable += 1
-            yield response.follow(next_page, callback = self.parse)
+        # if MmakaanSpiderSpider.page_variable<5:
+        #     MmakaanSpiderSpider.page_variable += 1
+        #     yield response.follow(next_page, callback = self.parse)
 
         yield self.items
 
@@ -58,7 +58,7 @@ class MmakaanSpiderSpider(scrapy.Spider):
         df.head()
         '''lst = df['title']
         df['title'] = [ ''.join(x) for x in zip(lst[0::2], lst[1::2], lst[2::2])]'''
-        df.to_excel("mahalakshmi_price_area.xlsx") 
+        df.to_excel("geetabhavan_price_area.xlsx") 
 
 
         # yield scraped_info
