@@ -8,7 +8,6 @@ class NBSpider(scrapy.Spider):
         'https://www.nobroker.in/property/rent/mumbai/Navi%20Mumbai/?searchParam=W3sibGF0IjoxOS4wMzMwNDg4LCJsb24iOjczLjAyOTY2MjUsInBsYWNlSWQiOiJDaElKclJNZnVQQzU1enNSYWZpRkVXajNFanciLCJwbGFjZU5hbWUiOiJOYXZpIE11bWJhaSJ9XQ==&sharedAccomodation=0&orderBy=nbRank,desc&radius=2&traffic=true&travelTime=30&propertyType=rent&pageNo=10'
     ]
 
-
     def __init__(self):
             self.items = {
                 'title':[],
@@ -17,7 +16,6 @@ class NBSpider(scrapy.Spider):
                 # 'owner_name':[],
                 'address':[]
             }
-
 
     def parse(self, response):              
         title = response.css('h2::text').extract()
