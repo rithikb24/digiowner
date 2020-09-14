@@ -24,6 +24,14 @@ class NBSpider(scrapy.Spider):
         # owner_name = response.css('.seller-name span::text').extract()
         address = response.css('.card-header-title h5::text').extract()
 
+        # TO REMOVE UNWANTED SYMBOLS AND DATA
+        """for i, elem in enumerate(title):
+             title[i] = elem.replace('\n', '') 
+
+        for i, elem in enumerate(address):
+             address[i] = elem.replace('\n', '') """
+
+
         self.items['title'].append(title)
         self.items['price'].append(price)
         self.items['area'].append(area)
