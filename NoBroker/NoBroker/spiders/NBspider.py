@@ -7,4 +7,8 @@ class NBSpider(scrapy.Spider):
     ]
 
     def parse(self, response):
-        
+        area = response.css('.solid-border-right meta+ span::text').extract()
+        price = response.css('.solid-border-right .inr_resale+ span::text').extract()
+        title = response.css('h2::text').extract()
+        # owner_name = response.css('.seller-name span::text').extract()
+        address = response.css('.card-header-title h5::text').extract()
