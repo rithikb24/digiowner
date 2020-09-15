@@ -25,11 +25,11 @@ class NBSpider(scrapy.Spider):
         address = response.css('.card-header-title h5::text').extract()
 
         # TO REMOVE UNWANTED SYMBOLS AND DATA
-        """for i, elem in enumerate(title):
+        for i, elem in enumerate(title):
              title[i] = elem.replace('\n', '') 
 
         for i, elem in enumerate(address):
-             address[i] = elem.replace('\n', '') """
+             address[i] = elem.replace('\n', '') 
 
 
         self.items['title'].append(title)
@@ -37,9 +37,18 @@ class NBSpider(scrapy.Spider):
         self.items['area'].append(area)
         self.items['address'].append(address)
 
-        df = pd.DataFrame.from_dict(scraped_info, orient='index')
-		# df.transpose()	
-		# df.head()
-		df.to_excel("navi_mumbai.xlsx")
+        yield self.items
 
-		yield self.items
+        df = pd.DataFrame() 
+        df = pd.DataFrame.from_dict(self.items, orient='index')
+        df = df.transpose()	
+        df.to_excel('r1.xlsx')
+
+        # df = pd.DataFrame() 
+        # df = pd.DataFrame.from_dict(self.items, orient='index')
+		# # df.transpose()	
+		# # df.head()
+		# df.to_excel('r.xlsx', index = False)
+
+		
+        pass
