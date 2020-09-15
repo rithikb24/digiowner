@@ -1,6 +1,7 @@
-# -*- coding: utf-8 -*-
 import scrapy
+import re
 from ..items import ScraperbricksItem
+import pandas as pd
 
 class MagicSpiderSpider(scrapy.Spider):
     name = 'magic_spider'
@@ -12,14 +13,28 @@ class MagicSpiderSpider(scrapy.Spider):
         area = response.css('.cursorPointer .row+ div .row:nth-child(1) .col-sm-9::text').extract()
         price = response.css('.pricesty::text').extract()
         address = response.css('.cursorPointer > .row .col-sm-9::text').extract()
+        titles = response.css('.col-md-7 h2::text').extract()
 
-        for p in price:
-            p = p.replace('\n', '')
-            p = p.replace('\t', '')
-            p = p.replace('\r', '')
+        regex = re.compile(r'[\n\r\t]')
+        for i in range(len(area)):
+            area[i] = regex.sub("", area[i])
 
+        for i in range(len(price)):
+            price[i] = regex.sub("", price[i])
+
+        for i in range(len(address)):
+            address[i] = regex.sub("", address[i])
+        
+        for i in range(len(titles)):
+            titles[i] = regex.sub("", titles[i])
+
+        items['area'] = area
         items['price'] = price
+        items['address'] = address
+        items['titles'] = titles
 
-        yield price
+        df = pd.DataFrame.from_dict(items, orient='index')
+        df.to_excel("test01.xlsx")
 
+        yield items
         pass
