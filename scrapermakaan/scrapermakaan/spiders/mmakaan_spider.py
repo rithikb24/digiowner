@@ -5,7 +5,7 @@ import pandas as pd
 
 class MmakaanSpiderSpider(scrapy.Spider):
     name = 'makaan_spider'
-    start_urls = ['https://www.makaan.com/indore-property/geeta-bhavan-rental-flats-58662']
+    start_urls = ['https://www.makaan.com/listings?postedBy=owner&listingType=rent&pageType=LISTINGS_PROPERTY_URLS&cityName=Indore&localityName=Palasia,Race%20course,Geeta%20bhavan,South%20Tukoganj&cityId=13&localityId=52242,58681,58662,58693&templateId=MAKAAN_MULTIPLE_LOCALITY_LISTING_BUY&localityOrSuburbId=52242,58681,58662,58693']
     page_variable = 2
 
     def __init__(self):
@@ -30,11 +30,11 @@ class MmakaanSpiderSpider(scrapy.Spider):
 
         test_title = [ ''.join(x) for x in zip(title[0::2], title[1::2], title[2::2])]
 
-        # self.items['title'].append(test_title)
+        self.items['title'].append(test_title)
         self.items['price'].append(price)
         self.items['area'].append(area)
-        # self.items['owner_name'].append(owner_name)
-        # self.items['address'].append(address)
+        self.items['owner_name'].append(owner_name)
+        self.items['address'].append(address)
         # next_page = 'https://www.makaan.com/indore-property/mahalakshmi-nagar-rental-flats-52212?page=' +str(MmakaanSpiderSpider.page_variable) + '/'
 
         # if MmakaanSpiderSpider.page_variable<5:
@@ -51,16 +51,25 @@ class MmakaanSpiderSpider(scrapy.Spider):
         # 'address' : address,
         # }
 
+        # Split given list and insert in excel file
+        df = pd.DataFrame() 
 
+        df['title'] = self.items[0::5] 
+        df['price'] = self.items[1::5] 
+        df['area'] = self.items[2::5] 
+        df['owner_name'] = self.items[3::5] 
+        df['address'] = self.items[4::5]
 
-        df = pd.DataFrame.from_dict(self.items, orient='index')
-        # df = df.transpose()  
-        df.head()
-        '''lst = df['title']
-        df['title'] = [ ''.join(x) for x in zip(lst[0::2], lst[1::2], lst[2::2])]'''
-        df.to_excel("geetabhavan_price_area.xlsx") 
+        df.to_excel('result.xlsx', index = False) 
+
+        # df = pd.DataFrame.from_dict(self.items, orient='index')
+        # # df = df.transpose()  
+        # df.head()
+        # '''lst = df['title']
+        # df['title'] = [ ''.join(x) for x in zip(lst[0::2], lst[1::2], lst[2::2])]'''
+        # df.to_excel("palasia_and_nearby.xlsx") 
 
 
         # yield scraped_info
 
-        # pass
+        pass
