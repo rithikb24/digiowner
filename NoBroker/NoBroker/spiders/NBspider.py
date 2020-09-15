@@ -39,7 +39,7 @@ class NBSpider(scrapy.Spider):
 
         df = pd.DataFrame.from_dict(scraped_info, orient='index')
 		# df.transpose()	
-		df.head()
+		# df.head()
 		df.to_excel("navi_mumbai.xlsx")
 
 		yield self.items
