@@ -42,7 +42,7 @@ class NBSpider(scrapy.Spider):
         df = pd.DataFrame() 
         df = pd.DataFrame.from_dict(self.items, orient='index')
         df = df.transpose()	
-        df.to_excel('r1.xlsx')
+        df.to_excel('r2.xlsx')
 
         # df = pd.DataFrame() 
         # df = pd.DataFrame.from_dict(self.items, orient='index')

@@ -18,14 +18,14 @@ class AcreSpiderSpider(scrapy.Spider):
 		price = response.css('#srp_tuple_price::text').extract()
 		area = response.css('#srp_tuple_primary_area::text').extract()
 		bhk = response.css('#srp_tuple_bedroom::text').extract()
-		owner_name = response.css('.list_header_semiBold a::text').extract()
+		# owner_name = response.css('.list_header_semiBold a::text').extract()
 		date_of_posting = response.css('.caption_strong_small span::text').extract()
 
 		items['title'] = title
 		items['price'] = price
 		items['area'] = area
 		items['bhk'] = bhk
-		items['owner_name'] = owner_name
+		# items['owner_name'] = owner_name
 		items['date_of_posting'] = date_of_posting
 
 		#yield items
@@ -38,14 +38,14 @@ class AcreSpiderSpider(scrapy.Spider):
 		'price' : price,
 		'area' : area,
 		'bhk' : bhk,
-		'owner_name' : owner_name,
+		# 'owner_name' : owner_name,
 		'date_of_posting' : date_of_posting,
 		}
 
 		df = pd.DataFrame.from_dict(scraped_info, orient='index')
-		df.transpose()	
-		df.head()
-		df.to_excel("st.xlsx")
+		df = df.transpose()	
+		# df.head()
+		df.to_excel("test02.xlsx")
 		yield scraped_info
 
 		
