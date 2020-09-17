@@ -5,7 +5,7 @@ import pandas as pd
 
 class AcreSpiderSpider(scrapy.Spider):
 	name = 'acre_spider'
-	start_urls = ['https://www.99acres.com/search/property/buy/residential-all/south-tukoganj-indore?search_type=QS&refSection=GNB&search_location=NRI&lstAcn=NR_R&lstAcnId=-1&src=CLUSTER&preference=S&selected_tab=1&city=142&res_com=R&property_type=R&isvoicesearch=N&keyword_suggest=South%20Tukoganj%2C%20Indore%3B&class=O&fullSelectedSuggestions=South%20Tukoganj%2C%20Indore&strEntityMap=W3sidHlwZSI6ImxvY2FsaXR5In0seyIxIjpbIlNvdXRoIFR1a29nYW5qLCBJbmRvcmUiLCJDSVRZXzE0MiwgTE9DQUxJVFlfMjM1NTksIFBSRUZFUkVOQ0VfUywgUkVTQ09NX1IiXX1d&texttypedtillsuggestion=south%20tuko&refine_results=Y&Refine_Localities=Refine%20Localities&action=%2Fdo%2Fquicksearch%2Fsearch&suggestion=CITY_142%2C%20LOCALITY_23559%2C%20PREFERENCE_S%2C%20RESCOM_R&searchform=1&locality=23559&price_min=null&price_max=null']
+	start_urls = ['https://www.99acres.com/rent-property-in-bhanvarkuan-indore-ffid?src=CLUSTER']
 
 	def parse(self, response):
 
@@ -45,7 +45,7 @@ class AcreSpiderSpider(scrapy.Spider):
 		df = pd.DataFrame.from_dict(scraped_info, orient='index')
 		df = df.transpose()	
 		# df.head()
-		df.to_excel("test02.xlsx")
+		df.to_excel("bhavarkuan.xlsx")
 		yield scraped_info
 
 		
