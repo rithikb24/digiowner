@@ -46,7 +46,8 @@ class MBSpider(scrapy.Spider):
             owner[i] = regex.sub("", owner[i])
         
 
-
+        df1 = pd.DataFrame() 
+        
 
         self.items['title'].append(title)
         self.items['price'].append(price)
