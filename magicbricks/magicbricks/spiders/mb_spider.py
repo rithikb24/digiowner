@@ -8,7 +8,7 @@ class MBSpider(scrapy.Spider):
     start_urls = [
         'https://www.magicbricks.com/property-for-rent/residential-real-estate?proptype=Multistorey-Apartment,Builder-Floor-Apartment,Penthouse,Studio-Apartment,Service-Apartment,Residential-House,Villa&Locality=Vijay-Nagar&cityName=Indore'
     ]
-    regex = re.compile(r'[\n\r\t]')
+    
 
     def __init__(self):
             self.items = {
@@ -26,13 +26,13 @@ class MBSpider(scrapy.Spider):
         # owner_name = response.css('.seller-name span::text').extract()
         # address = response.css('.card-header-title h5::text').extract()
         
-
+        regex = re.compile(r'[\n\r\t]')
         # TO REMOVE UNWANTED SYMBOLS AND DATA
         for i in range(len(title)):
              title[i] = regex.sub("", title[i]) 
         # To remove empty string ('') from lists 
-        # while('' in title):
-        #     title.remove('')
+        while('' in title):
+            title.remove('')
 
         for i in range(len(price)):
              price[i] = regex.sub("", price[i])
@@ -52,6 +52,6 @@ class MBSpider(scrapy.Spider):
         df = pd.DataFrame() 
         df = pd.DataFrame.from_dict(self.items, orient='index')
         df = df.transpose()	
-        df.to_excel('test02.xlsx')
+        df.to_excel('test03.xlsx')
 		
         pass
