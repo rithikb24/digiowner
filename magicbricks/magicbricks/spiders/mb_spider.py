@@ -18,13 +18,22 @@ class MBSpider(scrapy.Spider):
     #         }
 
     def parse(self, response):              
-        title = response.css('h2::text').extract()
-        price = response.css('.solid-border-right .inr_resale+ span::text').extract()
-        area = response.css('.solid-border-right meta+ span::text').extract()
+        title = response.css('.m-srp-card__title__bhk::text').extract()
+        price = response.css('.m-srp-card__price::text').extract()
+        area = response.css('#projectMiddleMainWrap .font-type-3::text').extract() # Not every property have area in it's title
         # owner_name = response.css('.seller-name span::text').extract()
         address = response.css('.card-header-title h5::text').extract()
 
         # TO REMOVE UNWANTED SYMBOLS AND DATA
+        for i, elem in enumerate(title):
+             title[i] = elem.replace('\n', '') 
+            # To remove empty string ('') from lists 
+            # while('' in title):
+            #     title.remove('')
+
+        for i, elem in enumerate(price):
+             price[i] = elem.replace('\n', '') 
+
         # for i, elem in enumerate(title):
         #      title[i] = elem.replace('\n', '') 
 
