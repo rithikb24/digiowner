@@ -14,7 +14,8 @@ class MBSpider(scrapy.Spider):
             self.items = {
                 'title':[],
                 'price':[],
-                'area':[]
+                'area':[],
+                'owner':[]
                 # 'owner_name':[],
                 # 'address':[]
             }
@@ -23,6 +24,7 @@ class MBSpider(scrapy.Spider):
         title = response.css('.m-srp-card__title::text').extract()
         price = response.css('.m-srp-card__price::text').extract()
         area = response.css('#projectMiddleMainWrap .font-type-3::text').extract() # Not every property have area in it's title
+        owner = response.css('.m-srp-card__advertiser__name::text').extract()
         # owner_name = response.css('.seller-name span::text').extract()
         # address = response.css('.card-header-title h5::text').extract()
         
@@ -39,6 +41,9 @@ class MBSpider(scrapy.Spider):
 
         for i in range(len(area)):
             area[i] = regex.sub("", area[i])
+
+        for i in range(len(owner)):
+            owner[i] = regex.sub("", owner[i])
         
 
 
@@ -46,12 +51,13 @@ class MBSpider(scrapy.Spider):
         self.items['title'].append(title)
         self.items['price'].append(price)
         self.items['area'].append(area)
+        self.items['owner'].append(owner)
 
         yield self.items
 
         df = pd.DataFrame() 
         df = pd.DataFrame.from_dict(self.items, orient='index')
         df = df.transpose()	
-        df.to_excel('test03.xlsx')
+        df.to_excel('test04.xlsx')
 		
         pass
