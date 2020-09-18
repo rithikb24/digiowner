@@ -1,16 +1,19 @@
-l = [13000,15000,11000,19000,11000,15000,15000,12000,14000,11500,22000,14000,11000,15000,16500,18000,20000,15000,14000,14000,25000,18000,10500,8000,13000,16000,15000,15000,15000,16000,15000,8000,12000,7000,7000,15000,13500,33000,13000,10000,18000,13000,15000]
-a = [1000,750,1500,1815,650,1500,1400,1200,716,1500,1700,600,1200,1436,1500,1200,1500,1500,1250,900,1800,1550,850,225,1000,1450,1500,850,1415,1500,1110,580,900,750,575,700,800,2100,1150,275,1490,1500,2000]
+price = [ 1.08,  2.5 , 60.  , 90.  , 60.  , 12.5 ]
+a = [2350, 2400, 2100, 2800, 2100,  400]
+
+print(len(price))
+print(len(a))
 
 r = []
 
-print('Maximum Rent:\t\t', max(l))
-print('Minimum Rent:\t\t', min(l))
+print('Maximum Buy:\t\t', max(price))
+print('Minimum Buy:\t\t', min(price))
 
-for i in range(0, len(l)):
-    r.append(l[i]//a[i])
-    
+for i in range(0, len(price)):
+    r.append(price[i]/a[i])
+   
 print('List of rent:\t\t', r)
 
 # print(sum(r))
 print('Total Properties:\t', len(r))
-print('Average Rent/sq ft.:\t',sum(r)/len(r))
+print('Average Buy/sq ft.:\t',sum(r)/len(r))
