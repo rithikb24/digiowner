@@ -3,14 +3,14 @@ a = [1000,750,1500,1815,650,1500,1400,1200,716,1500,1700,600,1200,1436,1500,1200
 
 r = []
 
-print(max(l))
-print(min(l))
+print('Maximum Rent:\t\t', max(l))
+print('Minimum Rent:\t\t', min(l))
 
 for i in range(0, len(l)):
     r.append(l[i]//a[i])
     
-print(r)
+print('List of rent:\t\t', r)
 
-print(sum(r))
-print(len(r))
-print(sum(r)/len(r))
+# print(sum(r))
+print('Total Properties:\t', len(r))
+print('Average Rent/sq ft.:\t',sum(r)/len(r))
