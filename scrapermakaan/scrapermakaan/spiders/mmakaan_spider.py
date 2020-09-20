@@ -5,22 +5,12 @@ import pandas as pd
 
 class MmakaanSpiderSpider(scrapy.Spider):
     name = 'makaan_spider'
-    start_urls = ['https://www.makaan.com/listings?postedBy=owner&listingType=rent&pageType=LISTINGS_PROPERTY_URLS&cityName=Indore&localityName=Palasia,Race%20course,Geeta%20bhavan,South%20Tukoganj&cityId=13&localityId=52242,58681,58662,58693&templateId=MAKAAN_MULTIPLE_LOCALITY_LISTING_BUY&localityOrSuburbId=52242,58681,58662,58693']
-    page_variable = 2
-
-    def __init__(self):
-        self.items = {
-            'title':[],
-            'price':[],
-            'area':[],
-            'owner_name':[],
-            'address':[]
-        }
+    page_number = 2
+    start_urls = ['https://www.makaan.com/listings?propertyType=apartment&postedBy=owner&listingType=rent&pageType=LOCALITY_URLS&cityName=Indore&localityName=vijay%20nagar&suburbName=Indore%20North&cityId=13&localityId=52245&suburbId=10286&templateId=MAKAAN_LOCALITY_LISTING_RENT']
 
     def parse(self, response):
         
-        # items = ScrapermakaanItem()
-         
+        items = ScrapermakaanItem()
 
         area = response.css('.size .val::text').extract()
         price = response.css('.price .val::text').extract()
@@ -28,20 +18,15 @@ class MmakaanSpiderSpider(scrapy.Spider):
         owner_name = response.css('.seller-name span::text').extract()
         address = response.css('.loclink strong::text').extract()
 
-        test_title = [ ''.join(x) for x in zip(title[0::2], title[1::2], title[2::2])]
+        test_title = [ ''.join(x) for x in zip(title[0::3], title[1::3], title[2::3])]
 
-        self.items['title'].append(test_title)
-        self.items['price'].append(price)
-        self.items['area'].append(area)
-        self.items['owner_name'].append(owner_name)
-        self.items['address'].append(address)
-        # next_page = 'https://www.makaan.com/indore-property/mahalakshmi-nagar-rental-flats-52212?page=' +str(MmakaanSpiderSpider.page_variable) + '/'
 
-        # if MmakaanSpiderSpider.page_variable<5:
-        #     MmakaanSpiderSpider.page_variable += 1
-        #     yield response.follow(next_page, callback = self.parse)
+        items['title'] = test_title
+        items['price'] = price
+        items['area'] = area
+        items['owner_name'] = owner_name
+        items['address'] = address
 
-        yield self.items
 
         # scraped_info = {
         # 'title' : test_title,
@@ -51,25 +36,22 @@ class MmakaanSpiderSpider(scrapy.Spider):
         # 'address' : address,
         # }
 
-        # Split given list and insert in excel file
-        df = pd.DataFrame() 
+        yield items
 
-        df['title'] = self.items[0::5] 
-        df['price'] = self.items[1::5] 
-        df['area'] = self.items[2::5] 
-        df['owner_name'] = self.items[3::5] 
-        df['address'] = self.items[4::5]
+        # next_page = 'https://www.makaan.com/indore-residential-property/rent-property-in-indore-city?page='+ str(MmakaanSpiderSpider.page_number) + '/'
+        # if MmakaanSpiderSpider.page_number<10:
+        #     yield response.follow(next_page, callback = self.parse)
 
-        df.to_excel('result.xlsx', index = False) 
 
-        # df = pd.DataFrame.from_dict(self.items, orient='index')
-        # # df = df.transpose()  
+
+
+        df = pd.DataFrame.from_dict(items, orient='index')
+        df = df.transpose()  
         # df.head()
         # '''lst = df['title']
         # df['title'] = [ ''.join(x) for x in zip(lst[0::2], lst[1::2], lst[2::2])]'''
-        # df.to_excel("palasia_and_nearby.xlsx") 
+        df.to_excel("final.xlsx")
 
 
-        # yield scraped_info
 
         pass
