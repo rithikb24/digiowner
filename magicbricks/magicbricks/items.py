@@ -9,4 +9,8 @@ import scrapy
 class MagicbricksItem(scrapy.Item):
     # define the fields for your item here like:
     # name = scrapy.Field()
+    title = scrapy.Field()
+    price = scrapy.Field()
+    area = scrapy.Field()
+    owner_name = scrapy.Field()
     pass

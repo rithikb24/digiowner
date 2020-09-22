@@ -1,26 +1,29 @@
 import scrapy
 import pandas as pd
 import re
-
+import ..items import MagicbricksItem
 
 class MBSpider(scrapy.Spider):
     name = 'mb_spider'
     start_urls = [
         'https://www.magicbricks.com/property-for-rent/residential-real-estate?proptype=Multistorey-Apartment,Builder-Floor-Apartment,Penthouse,Studio-Apartment,Service-Apartment,Residential-House,Villa&Locality=Vijay-Nagar&cityName=Indore'
-    ]
+    # ]
     
 
-    def __init__(self):
-            self.items = {
-                'title':[],
-                'price':[],
-                'area':[],
-                'owner':[]
-                # 'owner_name':[],
-                # 'address':[]
-            }
+    # def __init__(self):
+    #         items = {
+    #             'title':[],
+    #             'price':[],
+    #             'area':[],
+    #             'owner':[]
+    #             # 'owner_name':[],
+    #             # 'address':[]
+    #         }
 
-    def parse(self, response):              
+    def parse(self, response):  
+
+        items = MagicbricksItem()    
+
         title = response.css('.m-srp-card__title::text').extract()
         price = response.css('.m-srp-card__price::text').extract()
         area = response.css('#projectMiddleMainWrap .font-type-3::text').extract() # Not every property have area in it's title
@@ -49,16 +52,16 @@ class MBSpider(scrapy.Spider):
         df1 = pd.DataFrame() 
         
 
-        self.items['title'].append(title)
-        self.items['price'].append(price)
-        self.items['area'].append(area)
-        self.items['owner'].append(owner)
+        items['title'] = title
+        items['price'] = price
+        items['area'] = area
+        items['owner'] = owner
 
-        yield self.items
+        yield items
 
         df = pd.DataFrame() 
-        df = pd.DataFrame.from_dict(self.items, orient='index')
+        df = pd.DataFrame.from_dict(items, orient='index')
         df = df.transpose()	
-        df.to_excel('test04.xlsx')
+        df.to_excel('test05.xlsx')
 		
         pass
