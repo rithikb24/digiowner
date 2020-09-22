@@ -26,8 +26,8 @@ class SqaureSpider(scrapy.Spider):
 		scraped_info = items
 
 		df = pd.DataFrame.from_dict(scraped_info, orient='index')
-		df.transpose()
-		df.to_excel("demo_T.xlsx")
+		df = df.transpose()
+		df.to_excel("final.xlsx")
 
 		yield items
 
