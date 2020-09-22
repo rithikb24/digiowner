@@ -50,7 +50,7 @@ class MmakaanSpiderSpider(scrapy.Spider):
         # df.head()
         # '''lst = df['title']
         # df['title'] = [ ''.join(x) for x in zip(lst[0::2], lst[1::2], lst[2::2])]'''
-        df.to_excel("final.xlsx")
+        df.to_excel("test01.xlsx")
 
 
 
