@@ -1,12 +1,13 @@
 import scrapy
 import pandas as pd
 import re
-import ..items import MagicbricksItem
+from ..items import MagicbricksItem
 
 class MBSpider(scrapy.Spider):
     name = 'mb_spider'
     start_urls = [
         'https://www.magicbricks.com/property-for-rent/residential-real-estate?proptype=Multistorey-Apartment,Builder-Floor-Apartment,Penthouse,Studio-Apartment,Service-Apartment,Residential-House,Villa&Locality=Vijay-Nagar&cityName=Indore'
+    ]
     # ]
     
 

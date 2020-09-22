@@ -12,5 +12,5 @@ class MagicbricksItem(scrapy.Item):
     title = scrapy.Field()
     price = scrapy.Field()
     area = scrapy.Field()
-    owner_name = scrapy.Field()
+    owner = scrapy.Field()
     pass
