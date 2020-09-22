@@ -1,6 +1,6 @@
 import scrapy
 import pandas as pd
-
+from ..items import NobrokerItem
 
 class NBSpider(scrapy.Spider):
     name = 'nb_spider'
@@ -17,7 +17,10 @@ class NBSpider(scrapy.Spider):
     #             'address':[]
     #         }
 
-    def parse(self, response):              
+    def parse(self, response):     
+
+        items = NobrokerItem()
+
         title = response.css('h2::text').extract()
         price = response.css('.solid-border-right .inr_resale+ span::text').extract()
         area = response.css('.solid-border-right meta+ span::text').extract()
@@ -42,7 +45,7 @@ class NBSpider(scrapy.Spider):
         df = pd.DataFrame() 
         df = pd.DataFrame.from_dict(items, orient='index')
         df = df.transpose()	
-        df.to_excel('r4.xlsx')
+        df.to_excel('r5.xlsx')
 
         # df = pd.DataFrame() 
         # df = pd.DataFrame.from_dict(items, orient='index')
