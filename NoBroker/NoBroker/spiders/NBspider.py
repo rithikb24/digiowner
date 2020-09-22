@@ -8,14 +8,14 @@ class NBSpider(scrapy.Spider):
         'https://www.nobroker.in/property/rent/mumbai/Navi%20Mumbai/?searchParam=W3sibGF0IjoxOS4wMzMwNDg4LCJsb24iOjczLjAyOTY2MjUsInBsYWNlSWQiOiJDaElKclJNZnVQQzU1enNSYWZpRkVXajNFanciLCJwbGFjZU5hbWUiOiJOYXZpIE11bWJhaSJ9XQ==&sharedAccomodation=0&orderBy=nbRank,desc&radius=2&traffic=true&travelTime=30&propertyType=rent&pageNo=10'
     ]
 
-    def __init__(self):
-            self.items = {
-                'title':[],
-                'price':[],
-                'area':[],
-                # 'owner_name':[],
-                'address':[]
-            }
+    # def __init__(self):
+    #         self.items = {
+    #             'title':[],
+    #             'price':[],
+    #             'area':[],
+    #             # 'owner_name':[],
+    #             'address':[]
+    #         }
 
     def parse(self, response):              
         title = response.css('h2::text').extract()
@@ -32,20 +32,20 @@ class NBSpider(scrapy.Spider):
              address[i] = elem.replace('\n', '') 
 
 
-        self.items['title'].append(title)
-        self.items['price'].append(price)
-        self.items['area'].append(area)
-        self.items['address'].append(address)
+        items['title'] = title
+        items['price'] = price
+        items['area'] = area
+        items['address'] = address
 
-        yield self.items
+        yield items
 
         df = pd.DataFrame() 
-        df = pd.DataFrame.from_dict(self.items, orient='index')
+        df = pd.DataFrame.from_dict(items, orient='index')
         df = df.transpose()	
-        df.to_excel('r2.xlsx')
+        df.to_excel('r4.xlsx')
 
         # df = pd.DataFrame() 
-        # df = pd.DataFrame.from_dict(self.items, orient='index')
+        # df = pd.DataFrame.from_dict(items, orient='index')
 		# # df.transpose()	
 		# # df.head()
 		# df.to_excel('r.xlsx', index = False)
