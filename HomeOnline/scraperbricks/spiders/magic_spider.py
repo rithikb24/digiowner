@@ -34,7 +34,7 @@ class MagicSpiderSpider(scrapy.Spider):
         items['titles'] = titles
 
         df = pd.DataFrame.from_dict(items, orient='index')
-        df.to_excel("test01.xlsx")
+        df.to_excel("final.xlsx")
 
         yield items
         pass
