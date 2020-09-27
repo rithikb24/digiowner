@@ -25,10 +25,12 @@ class MBSpider(scrapy.Spider):
 
         items = MagicbricksItem()    
 
+        images = response.css('.lazy , .m-srp-card__summary__item:nth-child(2) .m-srp-card__summary__info::text').extract()
         title = response.css('.m-srp-card__title::text').extract()
         price = response.css('.m-srp-card__price::text').extract()
         area = response.css('#projectMiddleMainWrap .font-type-3::text').extract() # Not every property have area in it's title
         owner = response.css('.m-srp-card__advertiser__name::text').extract()
+        furnishing = response.css('.m-srp-card__summary__item:nth-child(2) .m-srp-card__summary__info::text').extract()
         # owner_name = response.css('.seller-name span::text').extract()
         # address = response.css('.card-header-title h5::text').extract()
         
@@ -52,17 +54,18 @@ class MBSpider(scrapy.Spider):
 
         df1 = pd.DataFrame() 
         
-
+        items['images'] = images[::2]
         items['title'] = title
-        items['price'] = price
+        items['price'] = price[::2]
         items['area'] = area
         items['owner'] = owner
+        items['furnishing'] = furnishing
 
         yield items
 
         df = pd.DataFrame() 
         df = pd.DataFrame.from_dict(items, orient='index')
         df = df.transpose()	
-        df.to_excel('test05.xlsx')
+        df.to_excel('test09.xlsx')
 		
         pass
