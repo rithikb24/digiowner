@@ -14,4 +14,6 @@ class NobrokerItem(scrapy.Item):
     area = scrapy.Field()
     # owner_name = scrapy.Field()
     address = scrapy.Field()
+    negotiable_rent = scrapy.Field()
+    furnishing = scrapy.Field()
     pass

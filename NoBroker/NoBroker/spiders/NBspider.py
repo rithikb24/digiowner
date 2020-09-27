@@ -26,6 +26,8 @@ class NBSpider(scrapy.Spider):
         area = response.css('.solid-border-right meta+ span::text').extract()
         # owner_name = response.css('.seller-name span::text').extract()
         address = response.css('.card-header-title h5::text').extract()
+        negotiable_rent = response.css('.rentMaintDiv .inr_resale+ span::text').extract()
+        furnishing = response.css('.property-furnishing .semi-bold::text').extract()
 
         # TO REMOVE UNWANTED SYMBOLS AND DATA
         for i, elem in enumerate(title):
@@ -35,17 +37,19 @@ class NBSpider(scrapy.Spider):
              address[i] = elem.replace('\n', '') 
 
 
-        items['title'] = title
+        items['title'] = title[1::2]
         items['price'] = price
         items['area'] = area
         items['address'] = address
+        items['negotiable_rent'] = negotiable_rent[::3]
+        items['furnishing'] = furnishing
 
         yield items
 
         df = pd.DataFrame() 
         df = pd.DataFrame.from_dict(items, orient='index')
         df = df.transpose()	
-        df.to_excel('r5.xlsx')
+        df.to_excel('test03.xlsx')
 
         # df = pd.DataFrame() 
         # df = pd.DataFrame.from_dict(items, orient='index')
