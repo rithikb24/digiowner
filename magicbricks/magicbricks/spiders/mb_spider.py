@@ -6,7 +6,7 @@ from ..items import MagicbricksItem
 class MBSpider(scrapy.Spider):
     name = 'mb_spider'
     start_urls = [
-        'https://www.magicbricks.com/property-for-rent/residential-real-estate?proptype=Multistorey-Apartment,Builder-Floor-Apartment,Penthouse,Studio-Apartment,Service-Apartment,Residential-House,Villa&Locality=Vijay-Nagar&cityName=Indore'
+        'https://www.magicbricks.com/property-for-sale/residential-real-estate?proptype=Multistorey-Apartment,Builder-Floor-Apartment,Penthouse,Studio-Apartment,Residential-House,Villa,Residential-Plot&Locality=New-Palasiya,Bengali-Square&cityName=Indore'
     ]
     # ]
     
@@ -25,12 +25,13 @@ class MBSpider(scrapy.Spider):
 
         items = MagicbricksItem()    
 
-        images = response.css('.lazy , .m-srp-card__summary__item:nth-child(2) .m-srp-card__summary__info::text').extract()
+        # images = response.css('.lazy , .m-srp-card__summary__item:nth-child(2) .m-srp-card__summary__info::text').extract()
         title = response.css('.m-srp-card__title::text').extract()
         price = response.css('.m-srp-card__price::text').extract()
-        area = response.css('#projectMiddleMainWrap .font-type-3::text').extract() # Not every property have area in it's title
+        area = response.css('input+ .m-srp-card__summary__item .m-srp-card__summary__info::text').extract() # Not every property have area in it's title
         owner = response.css('.m-srp-card__advertiser__name::text').extract()
-        furnishing = response.css('.m-srp-card__summary__item:nth-child(2) .m-srp-card__summary__info::text').extract()
+        # furnishing = response.css('.m-srp-card__summary__item:nth-child(2) .m-srp-card__summary__info::text').extract()
+        posted_date = response.css('.m-srp-card__post-date span::text').extract()
         # owner_name = response.css('.seller-name span::text').extract()
         # address = response.css('.card-header-title h5::text').extract()
         
@@ -54,18 +55,19 @@ class MBSpider(scrapy.Spider):
 
         df1 = pd.DataFrame() 
         
-        items['images'] = images[::2]
+        # items['images'] = images[::2]
         items['title'] = title
         items['price'] = price[::2]
         items['area'] = area
         items['owner'] = owner
-        items['furnishing'] = furnishing
+        # items['furnishing'] = furnishing
+        items['posted_date'] = posted_date[::2]
 
         yield items
 
         df = pd.DataFrame() 
         df = pd.DataFrame.from_dict(items, orient='index')
         df = df.transpose()	
-        df.to_excel('test09.xlsx')
+        df.to_excel('np04.xlsx')
 		
         pass

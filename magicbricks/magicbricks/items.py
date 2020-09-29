@@ -15,4 +15,5 @@ class MagicbricksItem(scrapy.Item):
     area = scrapy.Field()
     owner = scrapy.Field()
     furnishing = scrapy.Field()
+    posted_date = scrapy.Field()
     pass
