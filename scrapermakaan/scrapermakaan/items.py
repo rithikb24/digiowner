@@ -17,4 +17,5 @@ class ScrapermakaanItem(scrapy.Item):
     #bhk = scrapy.Field()
     owner_name = scrapy.Field()
     address = scrapy.Field()
+    furnishing = scrapy.Field()
     pass

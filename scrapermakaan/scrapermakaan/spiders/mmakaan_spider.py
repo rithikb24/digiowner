@@ -3,10 +3,12 @@ from ..items import ScrapermakaanItem
 
 import pandas as pd
 
+area_list, price_list, title_list, owner_name_list, address_list, furnishing_list = [],[],[],[],[],[]
+
 class MmakaanSpiderSpider(scrapy.Spider):
     name = 'makaan_spider'
     page_number = 2
-    start_urls = ['https://www.makaan.com/listings?propertyType=apartment&postedBy=owner&listingType=rent&pageType=LOCALITY_URLS&cityName=Indore&localityName=vijay%20nagar&suburbName=Indore%20North&cityId=13&localityId=52245&suburbId=10286&templateId=MAKAAN_LOCALITY_LISTING_RENT']
+    start_urls = ['https://www.makaan.com/listings?postedBy=owner&sortBy=date-desc&listingType=rent&pageType=LISTINGS_PROPERTY_URLS&cityName=Pune&localityName=wakad&suburbName=PCMC&cityId=21&localityId=50118&suburbId=10244&templateId=MAKAAN_LOCALITY_LISTING_RENT&page=1']
 
     def parse(self, response):
         
@@ -17,15 +19,23 @@ class MmakaanSpiderSpider(scrapy.Spider):
         title = response.css('.typelink span::text').extract()
         owner_name = response.css('.seller-name span::text').extract()
         address = response.css('.loclink strong::text').extract()
+        furnishing = response.css('.w44 .val::text').extract()
 
         test_title = [ ''.join(x) for x in zip(title[0::3], title[1::3], title[2::3])]
 
+        area_list.extend(area)
+        price_list.extend(price)
+        title_list.extend(test_title)
+        owner_name_list.extend(owner_name)
+        address_list.extend(address)
+        furnishing_list.extend(furnishing)
 
-        items['title'] = test_title
-        items['price'] = price
-        items['area'] = area
-        items['owner_name'] = owner_name
-        items['address'] = address
+        items['title'] = title_list
+        items['price'] = price_list
+        items['area'] = area_list
+        items['owner_name'] = owner_name_list
+        items['address'] = address_list
+        items['furnishing'] = furnishing_list
 
 
         # scraped_info = {
@@ -38,9 +48,10 @@ class MmakaanSpiderSpider(scrapy.Spider):
 
         yield items
 
-        # next_page = 'https://www.makaan.com/indore-residential-property/rent-property-in-indore-city?page='+ str(MmakaanSpiderSpider.page_number) + '/'
-        # if MmakaanSpiderSpider.page_number<10:
-        #     yield response.follow(next_page, callback = self.parse)
+        next_page = 'https://www.makaan.com/listings?postedBy=owner&sortBy=date-desc&listingType=rent&pageType=LISTINGS_PROPERTY_URLS&cityName=Pune&localityName=wakad&suburbName=PCMC&cityId=21&localityId=50118&suburbId=10244&templateId=MAKAAN_LOCALITY_LISTING_RENT&page='+ str(MmakaanSpiderSpider.page_number) + '/'
+        if MmakaanSpiderSpider.page_number<10:
+            MmakaanSpiderSpider.page_number += 1
+            yield scrapy.Request(url = next_page, callback = self.parse)
 
 
 
@@ -50,7 +61,7 @@ class MmakaanSpiderSpider(scrapy.Spider):
         # df.head()
         # '''lst = df['title']
         # df['title'] = [ ''.join(x) for x in zip(lst[0::2], lst[1::2], lst[2::2])]'''
-        df.to_excel("test01.xlsx")
+        df.to_excel("pune02.xlsx")
 
 
 
