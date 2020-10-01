@@ -5,7 +5,10 @@ import pandas as pd
 
 class AcreSpiderSpider(scrapy.Spider):
 	name = 'acre_spider'
-	start_urls = ['https://www.99acres.com/rent-property-in-bhanvarkuan-indore-ffid?src=CLUSTER']
+	page_number = 2
+	start_urls = [
+		'https://www.99acres.com/property-for-rent-in-wakad-pune-ffid?page=1'
+		]
 
 	def parse(self, response):
 
@@ -28,25 +31,32 @@ class AcreSpiderSpider(scrapy.Spider):
 		# items['owner_name'] = owner_name
 		items['date_of_posting'] = date_of_posting
 
-		#yield items
+		yield items
 
+		next_page = 'https://www.99acres.com/property-for-rent-in-wakad-pune-ffid?page='+str(AcreSpiderSpider.page_number)
+
+		if AcreSpiderSpider.page_number <= 10:
+			AcreSpiderSpider.page_number += 1
+			yield response.follow(next_page, callback=self.parse)
 
 		#for item in zip(title, price, area, bhk, owner_name, date_of_posting):
 
-		scraped_info = {
-		'title' : title,
-		'price' : price,
-		'area' : area,
-		'bhk' : bhk,
-		# 'owner_name' : owner_name,
-		'date_of_posting' : date_of_posting,
-		}
+		# scraped_info = {
+		# 'title' : title,
+		# 'price' : price,
+		# 'area' : area,
+		# 'bhk' : bhk,
+		# # 'owner_name' : owner_name,
+		# 'date_of_posting' : date_of_posting,
+		# }
 
-		df = pd.DataFrame.from_dict(scraped_info, orient='index')
+		df = pd.DataFrame.from_dict(items, orient='index')
 		df = df.transpose()	
 		# df.head()
-		df.to_excel("bhavarkuan.xlsx")
-		yield scraped_info
+		df.to_excel("wakad01.xlsx")
+		# yield scraped_info
+
+
 
 		
 
