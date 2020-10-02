@@ -35,7 +35,7 @@ class AcreSpiderSpider(scrapy.Spider):
 
 		next_page = 'https://www.99acres.com/property-for-rent-in-wakad-pune-ffid?page='+str(AcreSpiderSpider.page_number)
 
-		if AcreSpiderSpider.page_number <= 10:
+		if AcreSpiderSpider.page_number <= 20:
 			AcreSpiderSpider.page_number += 1
 			yield response.follow(next_page, callback=self.parse)
 
@@ -53,7 +53,7 @@ class AcreSpiderSpider(scrapy.Spider):
 		df = pd.DataFrame.from_dict(items, orient='index')
 		df = df.transpose()	
 		# df.head()
-		df.to_excel("wakad01.xlsx")
+		df.to_excel("wakad04.xlsx")
 		# yield scraped_info
 
 
