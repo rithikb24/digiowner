@@ -23,6 +23,7 @@ class AcreSpiderSpider(scrapy.Spider):
 		bhk = response.css('#srp_tuple_bedroom::text').extract()
 		# owner_name = response.css('.list_header_semiBold a::text').extract()
 		date_of_posting = response.css('.caption_strong_small span::text').extract()
+		link = response.xpath('//a[@class="body_med srpTuple__propertyName"]/@href').extract()
 
 		items['title'] = title
 		items['price'] = price
@@ -30,6 +31,7 @@ class AcreSpiderSpider(scrapy.Spider):
 		items['bhk'] = bhk
 		# items['owner_name'] = owner_name
 		items['date_of_posting'] = date_of_posting
+		items['link'] = link
 
 		yield items
 

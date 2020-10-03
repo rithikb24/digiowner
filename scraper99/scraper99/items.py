@@ -17,5 +17,6 @@ class Scraper99Item(scrapy.Item):
     bhk = scrapy.Field()
     owner_name = scrapy.Field()
     date_of_posting = scrapy.Field()
+    link = scrapy.Field()
 
     pass
