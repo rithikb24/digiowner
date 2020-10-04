@@ -8,7 +8,9 @@ area_list, price_list, title_list, owner_name_list, address_list, furnishing_lis
 class MmakaanSpiderSpider(scrapy.Spider):
     name = 'makaan_spider'
     page_number = 2
-    start_urls = ['https://www.makaan.com/listings?postedBy=owner&sortBy=date-desc&listingType=rent&pageType=LISTINGS_PROPERTY_URLS&cityName=Pune&localityName=wakad&suburbName=PCMC&cityId=21&localityId=50118&suburbId=10244&templateId=MAKAAN_LOCALITY_LISTING_RENT&page=1']
+    start_urls = [
+        'https://www.makaan.com/listings?postedBy=owner&sortBy=date-desc&listingType=rent&pageType=LISTINGS_PROPERTY_URLS&cityName=Pune&localityName=wakad&suburbName=PCMC&cityId=21&localityId=50118&suburbId=10244&templateId=MAKAAN_LOCALITY_LISTING_RENT&page=1'
+        ]
 
     def parse(self, response):
         
@@ -20,7 +22,7 @@ class MmakaanSpiderSpider(scrapy.Spider):
         owner_name = response.css('.seller-name span::text').extract()
         address = response.css('.loclink strong::text').extract()
         furnishing = response.css('.w44 .val::text').extract()
-        link = response.xpath('//a[@class="typelink"]/@href').extract()
+        # link = response.xpath('//a[@class="typelink"]/@href').extract()
 
         test_title = [ ''.join(x) for x in zip(title[0::3], title[1::3], title[2::3])]
 
@@ -30,7 +32,7 @@ class MmakaanSpiderSpider(scrapy.Spider):
         owner_name_list.extend(owner_name)
         address_list.extend(address)
         furnishing_list.extend(furnishing)
-        links.extend(link)
+        # links.extend(link)
 
         items['title'] = title_list
         items['price'] = price_list
@@ -38,7 +40,7 @@ class MmakaanSpiderSpider(scrapy.Spider):
         items['owner_name'] = owner_name_list
         items['address'] = address_list
         items['furnishing'] = furnishing_list
-        items['links'] = link
+        # items['links'] = link
 
 
         # scraped_info = {
@@ -64,7 +66,7 @@ class MmakaanSpiderSpider(scrapy.Spider):
         # df.head()
         # '''lst = df['title']
         # df['title'] = [ ''.join(x) for x in zip(lst[0::2], lst[1::2], lst[2::2])]'''
-        df.to_excel("pune02.xlsx")
+        df.to_excel("pune03.xlsx")
 
 
 
