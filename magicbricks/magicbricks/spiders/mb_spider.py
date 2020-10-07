@@ -6,7 +6,7 @@ from ..items import MagicbricksItem
 class MBSpider(scrapy.Spider):
     name = 'mb_spider'
     start_urls = [
-        'https://www.magicbricks.com/property-for-sale/residential-real-estate?proptype=Multistorey-Apartment,Builder-Floor-Apartment,Penthouse,Studio-Apartment,Residential-House,Villa,Residential-Plot&Locality=New-Palasiya,Bengali-Square&cityName=Indore'
+        'https://www.magicbricks.com/property-for-rent/residential-real-estate?proptype=Multistorey-Apartment,Builder-Floor-Apartment,Penthouse,Studio-Apartment,Service-Apartment,Residential-House,Villa&Locality=Dewas-Naka&cityName=Indore'
     ]
     # ]
     
@@ -68,6 +68,6 @@ class MBSpider(scrapy.Spider):
         df = pd.DataFrame() 
         df = pd.DataFrame.from_dict(items, orient='index')
         df = df.transpose()	
-        df.to_excel('np04.xlsx')
+        df.to_excel('07-09-2020_DewasNaka.xlsx')
 		
         pass
