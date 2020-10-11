@@ -7,7 +7,7 @@ class AcreSpiderSpider(scrapy.Spider):
 	name = 'acre_spider'
 	page_number = 2
 	start_urls = [
-		'https://www.99acres.com/property-for-rent-in-wakad-pune-ffid?page=1'
+		'https://www.99acres.com/search/property/rent/vijay-nagar-indore?city=142&locality=9438&preference=R&area_unit=1&budget_min=0&res_com=R?page=1'
 		]
 
 	def parse(self, response):
@@ -21,7 +21,7 @@ class AcreSpiderSpider(scrapy.Spider):
 		price = response.css('#srp_tuple_price::text').extract()
 		area = response.css('#srp_tuple_primary_area::text').extract()
 		bhk = response.css('#srp_tuple_bedroom::text').extract()
-		# owner_name = response.css('.list_header_semiBold a::text').extract()
+		owner_name = response.css('.list_header_semiBold a::text').extract()
 		date_of_posting = response.css('.caption_strong_small span::text').extract()
 		link = response.xpath('//a[@class="body_med srpTuple__propertyName"]/@href').extract()
 
@@ -29,15 +29,15 @@ class AcreSpiderSpider(scrapy.Spider):
 		items['price'] = price
 		items['area'] = area
 		items['bhk'] = bhk
-		# items['owner_name'] = owner_name
+		items['owner_name'] = owner_name
 		items['date_of_posting'] = date_of_posting
 		items['link'] = link
 
 		yield items
 
-		next_page = 'https://www.99acres.com/property-for-rent-in-wakad-pune-ffid?page='+str(AcreSpiderSpider.page_number)
+		next_page = 'https://www.99acres.com/search/property/rent/vijay-nagar-indore?city=142&locality=9438&preference=R&area_unit=1&budget_min=0&res_com=R?page='+str(AcreSpiderSpider.page_number)
 
-		if AcreSpiderSpider.page_number <= 20:
+		if AcreSpiderSpider.page_number <= 3:
 			AcreSpiderSpider.page_number += 1
 			yield response.follow(next_page, callback=self.parse)
 
@@ -55,7 +55,7 @@ class AcreSpiderSpider(scrapy.Spider):
 		df = pd.DataFrame.from_dict(items, orient='index')
 		df = df.transpose()	
 		# df.head()
-		df.to_excel("wakad04.xlsx")
+		df.to_excel("owner_name_vn.xlsx")
 		# yield scraped_info
 
 

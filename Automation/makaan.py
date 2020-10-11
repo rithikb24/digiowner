@@ -56,7 +56,7 @@ import time
 browser = webdriver.Chrome()
 time.sleep(1)
 
-browser.get('https://www.makaan.com/listings?postedBy=owner&sortBy=date-desc&listingType=rent&pageType=LISTINGS_PROPERTY_URLS&cityName=Pune&localityName=wakad&suburbName=PCMC&cityId=21&localityId=50118&suburbId=10244&templateId=MAKAAN_LOCALITY_LISTING_RENT&page=3')
+browser.get('https://www.makaan.com/listings?postedBy=owner&sortBy=date-desc&listingType=rent&pageType=LISTINGS_PROPERTY_URLS&cityName=Pune&localityName=wakad&suburbName=PCMC&cityId=21&localityId=50118&suburbId=10244&templateId=MAKAAN_LOCALITY_LISTING_RENT&page=5')
 time.sleep(2)
 
 connect_now = browser.find_elements_by_class_name('callwrap')
