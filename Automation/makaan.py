@@ -46,21 +46,64 @@
 # for i,seller_no in enumerate(seller_contacts):
 #     print('{}: {}'.format(i, seller_no))
 
-# -------------------------------------------------------------------------------------------
-# for Connect Now button
+# ------------------- IMPORT Packages ------------------------------
 
+from twilio.rest import Client
 from selenium import webdriver
 import time
+# --------------- Getting Access of twilio api ----------------------
 
+account_sid = 'AC56b68f5602cfc1e47f6e7df642be727f'
+auth_token = '5dbb0f02eee12b3a56ca4c8bbe250eac'
+_twilio_no = '+12189554251'
+client = Client(account_sid, auth_token)
+
+message = client.messages \
+    .create(
+         body='This is the ship that made the Kessel Run in fourteen parsecs?',
+         from_ = '+15017122661',
+         to = _twilio_no 
+     )
+
+print(message.sid)
+
+# --------------- Automation Starts from here ----------------
 
 browser = webdriver.Chrome()
 time.sleep(1)
 
-browser.get('https://www.makaan.com/listings?postedBy=owner&sortBy=date-desc&listingType=rent&pageType=LISTINGS_PROPERTY_URLS&cityName=Pune&localityName=wakad&suburbName=PCMC&cityId=21&localityId=50118&suburbId=10244&templateId=MAKAAN_LOCALITY_LISTING_RENT&page=5')
+browser.get('https://www.makaan.com/listings?propertyType=apartment,builder-floor,villa,independent-house,studio-apartment&postedBy=owner&sortBy=date-desc&listingType=buy&pageType=LISTINGS_PROPERTY_URLS&cityName=Indore&localityName=Rajendra%20Nagar,Rau&cityId=13&localityId=53044,52211&templateId=MAKAAN_MULTIPLE_LOCALITY_LISTING_BUY&localityOrSuburbId=53044,52211&page=1')
 time.sleep(2)
 
 connect_now = browser.find_elements_by_class_name('callwrap')
 seller_contacts = []
+
+# --------------- Entering OTP ------------------------------
+
+connect_now[0].click()
+time.sleep(3)
+
+select = browser.find_element_by_xpath('//*[@id="mod-singleSelectDropdown-3"]/div[2]')
+select.click()
+
+us = browser.find_element_by_xpath('//*[@id="mod-singleSelectDropdown-3"]/div[2]/div[2]/ul/li[2]')
+us.click()
+
+enter_no = browser.find_element_by_xpath('//*[@id="client-phone-num"]/div[1]/div/input') 
+enter_no.send_keys(_twilio_no)
+
+otp_connect_now = browser.find_element_by_xpath('//*[@id="lead-popup"]/div/div/div[2]/div[3]/span[1]') 
+otp_connect_now.click()
+otp_input.send_keys('5133')  
+
+verify = browser.find_element_by_xpath('//*[@id="lead-popup"]/div/div/div[3]')                                
+verify.click()
+
+skip = browser.find_element_by_xpath('//*[@id="lead-popup"]/div/div/div/div[2]/div[2]/a[1]')
+skip.click()
+
+# --------------- Starts extracting Numbers ----------------
+
 for i in connect_now[:]:
      i.click()
      time.sleep(3)
