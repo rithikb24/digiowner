@@ -53,9 +53,9 @@ from selenium import webdriver
 import time
 # --------------- Getting Access of twilio api ----------------------
 
-account_sid = 'AC56b68f5602cfc1e47f6e7df642be727f'
-auth_token = '5dbb0f02eee12b3a56ca4c8bbe250eac'
-_twilio_no = '+12189554251'
+account_sid = ''
+auth_token = ''
+_twilio_no = '+121*****251'
 client = Client(account_sid, auth_token)
 
 message = client.messages \
